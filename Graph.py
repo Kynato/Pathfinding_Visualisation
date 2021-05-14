@@ -1,3 +1,4 @@
+from point import Point
 from edge import Edge
 from vert import Vert
 
@@ -6,8 +7,13 @@ ANGLE_COST = STRAIGHT_COST*pow(2, 1/2)
 
 class Graph:
     def __init__(self, height:int, width:int):
+        # Grid size
         self.width = width
         self.height = height
+
+        # Default trip
+        self.start = Point(0, 0)
+        self.finish = Point(width-1, height-1)
 
         # Create grid of verts
         self.grid = create_grid(height, width)
@@ -15,35 +21,51 @@ class Graph:
         # Create all of the edges
         self.edges = create_edges(height, width, self)
 
-        
+    # Set point that begins our jurney
+    def set_start(self, row:int, col:int):
+        self.start = Point(col, row)
+
+    # Set point that is searched
+    def set_finish(self, row:int, col:int):
+        self.finish = Point(col, row)
+
+    # Returns ID of the vert  
     def get_vert_id(self, col:int, row:int):
         return self.grid[row][col].id  
 
+    # Prints out helpful troubleshooting info
     def display(self):
+
+        # Prints out a grid of VERT_IDs
         print('ID_GRID:')
         for i in range(self.height):
             for j in range(self.width):
                 print(self.grid[i][j].id, end=' ')
             print('')
+
+        # Prints out a list of edges and their costs
         '''
         print('EDGES:')
         for edge in self.edges:
             edge.display()
         '''
 
+        # Prints out the grade of the verticie
         print('EDGE_DENSITY:')
         for id in range(self.width*self.height):
             ctr = 0
             for edge in self.edges:
                 if id in edge.verts:
                     ctr = ctr+1
-            print(ctr//2, end=' ')
             if id%self.width == self.width-1:
-                print('')
+                print(ctr//2)
+            else:
+                print(ctr//2, end=' ')
+
         
 
 
-
+# ELEGANCY FUNCTIONS
 
 def create_grid(h:int, w:int):
     ctr = 0
@@ -64,9 +86,9 @@ def create_edges(h:int, w:int, graph:Graph):
             current_vert = graph.get_vert_id(col, row)
             # Now create edge for every direction if possible
             # and add it to the stack
-            #       N
-            #   W       E
-            #       S
+            #   NW  N   NE
+            #   W   X   E
+            #   SW  S   SE
 
             # N
             if row-1 >= 0:
