@@ -58,11 +58,11 @@ class Graph:
             print('')
 
         # Prints out a list of edges and their costs
-        '''
-        print('EDGES:')
-        for edge in self.edges:
-            edge.display()
-        '''
+        if True:
+            print('EDGES:')
+            for edge in self.edges:
+                edge.display()
+        
 
         # Prints out the grade of the verticie
         print('EDGE_DENSITY:')
@@ -72,9 +72,9 @@ class Graph:
                 if id in edge.verts:
                     ctr = ctr+1
             if id%self.width == self.width-1:
-                print(ctr//2)
+                print(ctr)
             else:
-                print(ctr//2, end=' ')
+                print(ctr, end=' ')
 
         # Prints out the euclidean distance from each vert to finish
         print('EUCLIDEAN_DISTANCES:')
@@ -102,6 +102,7 @@ def create_grid(h:int, w:int):
 def create_edges(h:int, w:int, graph:Graph):
     grid = graph.grid
     stack = []
+    ctr = 0
     for row in range(h):
         for col in range(w):
             current_vert = graph.get_vert_id(col, row)
@@ -136,6 +137,25 @@ def create_edges(h:int, w:int, graph:Graph):
             # NW
             if col-1 >= 0 and row-1 >= 0:
                 stack.append(Edge(current_vert, graph.get_vert_id(col-1, row-1), ANGLE_COST))
+
+    # Clear duplicates from the stack
+    # Now every edge is doubled but symetrically mirrored
+
+    for org in stack:
+        # Helper vars
+        id_1 = org.verts[0]
+        id_2 = org.verts[1]
+        e_id = org.id
+
+        # Search for duplicates
+        for dupe in stack:
+            # If not the same as org
+            if dupe.id is not e_id:
+                # And if the verts are the same
+                if id_1 in dupe.verts and id_2 in dupe.verts:
+                    stack.remove(dupe)  # Drop from stack
+            
+    # well it is not a stack really xd 
 
     return stack
             

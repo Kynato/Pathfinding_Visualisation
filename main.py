@@ -1,3 +1,4 @@
-from vert import Vert
+set1 = (1, 3)
+c = [1, 3]
 
-v = Vert(5, 5)
+print(c in set1)
