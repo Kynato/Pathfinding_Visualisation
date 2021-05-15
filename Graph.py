@@ -20,7 +20,7 @@ class Graph:
         # Create grid of verts
         self.grid = create_grid(height, width)
 
-        # Create all the edges
+        # Create a set of all the edges
         self.edges = create_edges(height, width, self)
 
         # Calculate the Euclidean Distances for each vert from finish vert
@@ -157,7 +157,7 @@ def create_edges(h:int, w:int, graph:Graph):
             
     # well it is not a stack really xd 
 
-    return stack
+    return set(stack)
             
 
 
@@ -171,7 +171,7 @@ if __name__ == '__main__':
     print('=== graph.py - DIRECT LAUNCH ===')
     print('================================')
 
-    g = Graph(5, 10)
+    g = Graph(3, 3)
     g.display()
 
 else:
