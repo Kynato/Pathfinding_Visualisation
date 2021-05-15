@@ -2,42 +2,46 @@ from point import Point
 from edge import Edge
 from vert import Vert
 
-# CONSTS
-STRAIGHT_COST = 10
+# CONSTANTS
+STRAIGHT_COST = 1
 ANGLE_COST = STRAIGHT_COST*pow(2, 1/2)
 
 class Graph:
     def __init__(self, height:int, width:int):
+
         # Grid size
         self.width = width
         self.height = height
 
-        # Default trip
+        # Default path
         self.start = Point(0, 0)
         self.finish = Point(width-1, height-1)
 
         # Create grid of verts
         self.grid = create_grid(height, width)
 
-        # Create all of the edges
+        # Create all the edges
         self.edges = create_edges(height, width, self)
 
         # Calculate the Euclidean Distances for each vert from finish vert
         self.recalculate_euclidean_distances()
 
+
+    # Update whole grid with new euclidean distances
+    # Use when changing finishing point
     def recalculate_euclidean_distances(self):
         for row in range(self.height):
             for col in range(self.width):
                 self.grid[row][col].calculate_distance_from_point(self.finish)
         
-
     # Set point that begins our jurney
     def set_start(self, row:int, col:int):
         self.start = Point(col, row)
 
-    # Set point that is searched
+    # Set point that is searched, also updates the eucl_distances
     def set_finish(self, row:int, col:int):
         self.finish = Point(col, row)
+        self.recalculate_euclidean_distances()
 
     # Returns ID of the vert  
     def get_vert_id(self, col:int, row:int):
@@ -76,7 +80,7 @@ class Graph:
         print('EUCLIDEAN_DISTANCES:')
         for row in range(self.height):
             for col in range(self.width):
-                print(round(self.grid[row][col].euclidean_cost, 2), end=' ')
+                print(round(self.grid[row][col].euclidean_cost, 1), end=' ')
             print('')
 
         

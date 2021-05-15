@@ -10,9 +10,9 @@ class Vert:
         self.coords = Point(x, y)
 
         # COSTS
-        self.euclidean_cost = 0
-        self.current_cost = 0
-        self.total_cost = 0
+        self.euclidean_cost = 0     # dist from finish to this vert
+        self.current_cost = 0       # dist from start to this vert
+        self.total_cost = 0         # current + euclidean
 
         # IS WALL
         self.active = True
@@ -52,7 +52,7 @@ if __name__ == '__main__':
     # CHECK THE EUC. CALCULATIONS
     p = Vert(0, 1, 1)
     p.calculate_distance_from_point(Point(4,5))
-    if p.euclidean_cost != 5.0:
+    if p.euclidean_cost != 5.0: # Pitaghorian triangle (3,4,5)
         print("ERROR. EUCLIDEAN DISTANCE MISCALCULATION.")
         exit
 else:
