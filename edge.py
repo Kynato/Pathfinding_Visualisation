@@ -1,13 +1,17 @@
-from typing import Counter
-
-
 class Edge:
+
+    # Static counter of the instances
     count = 0
+
     def __init__(self, id_a:int, id_b:int, cost):
+        # Holds the information about both ends of the edge
         self.verts = [id_a, id_b]
+        # Cost of travel
         self.cost = cost
+        # Was already visited
         self.visited = False
 
+        # ID to help detect dupes
         self.id = Edge.count
         Edge.count += 1
 

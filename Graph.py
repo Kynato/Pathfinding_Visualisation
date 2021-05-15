@@ -88,6 +88,7 @@ class Graph:
 
 # ELEGANCY FUNCTIONS
 
+# Creates a grid filled with Verts
 def create_grid(h:int, w:int):
     ctr = 0
     grid = []
@@ -98,11 +99,9 @@ def create_grid(h:int, w:int):
             ctr = ctr+1
         grid.append(line)
     return grid
-
+# Creates a set of edges
 def create_edges(h:int, w:int, graph:Graph):
-    grid = graph.grid
     stack = []
-    ctr = 0
     for row in range(h):
         for col in range(w):
             current_vert = graph.get_vert_id(col, row)
