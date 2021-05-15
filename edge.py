@@ -3,6 +3,7 @@ class Edge:
         self.verts = [id_a, id_b]
         self.cost = cost
 
+    # Prints the id_1 - id_2 - cost
     def display(self):
         print(self.verts[0], ' - ', self.verts[1], ' : ', self.cost)
 

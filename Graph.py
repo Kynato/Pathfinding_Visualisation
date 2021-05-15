@@ -2,6 +2,7 @@ from point import Point
 from edge import Edge
 from vert import Vert
 
+# CONSTS
 STRAIGHT_COST = 10
 ANGLE_COST = STRAIGHT_COST*pow(2, 1/2)
 
@@ -21,6 +22,15 @@ class Graph:
         # Create all of the edges
         self.edges = create_edges(height, width, self)
 
+        # Calculate the Euclidean Distances for each vert from finish vert
+        self.recalculate_euclidean_distances()
+
+    def recalculate_euclidean_distances(self):
+        for row in range(self.height):
+            for col in range(self.width):
+                self.grid[row][col].calculate_distance_from_point(self.finish)
+        
+
     # Set point that begins our jurney
     def set_start(self, row:int, col:int):
         self.start = Point(col, row)
@@ -38,9 +48,9 @@ class Graph:
 
         # Prints out a grid of VERT_IDs
         print('ID_GRID:')
-        for i in range(self.height):
-            for j in range(self.width):
-                print(self.grid[i][j].id, end=' ')
+        for row in range(self.height):
+            for col in range(self.width):
+                print(self.grid[row][col].id, end=' ')
             print('')
 
         # Prints out a list of edges and their costs
@@ -61,6 +71,13 @@ class Graph:
                 print(ctr//2)
             else:
                 print(ctr//2, end=' ')
+
+        # Prints out the euclidean distance from each vert to finish
+        print('EUCLIDEAN_DISTANCES:')
+        for row in range(self.height):
+            for col in range(self.width):
+                print(round(self.grid[row][col].euclidean_cost, 2), end=' ')
+            print('')
 
         
 
